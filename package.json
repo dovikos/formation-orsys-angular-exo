@@ -12,5 +12,8 @@
     "demo"
   ],
   "author": "Ludovic Heitz",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "express": "4.15.2"
+  }
 }
