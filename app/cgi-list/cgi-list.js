@@ -3,6 +3,14 @@
 
 	var app = angular.module('cgi-list', []);
 
+	app.config(function() {
+		console.log('config cgi-list');
+	});
+
+	app.run(function() {
+		console.log('run cgi-list');
+	});
+
 	app.run(function($rootScope) {
 		'ngInject';
 		$rootScope.affaires = [];
@@ -36,7 +44,7 @@
 
 				ctrl.$onInit = function() {
 					ctrl.lastCall = new Date();
-					ctrl.offset = 2;
+					ctrl.offset = 0.5;
 				};
 
 				ctrl.getMore = function() {
