@@ -1,34 +1,38 @@
-(function() {
-	'use strict';
+'use strict';
 
-	var app = angular.module('main', ['cgi-list', 'cgi-route']);
+require('./style.css');
+require('angular');
+require('angular-ui-router');
+require('./cgi-list/cgi-list.js');
+require('./cgi-route/cgi-route.js');
 
-	app.config(function() {
-		console.log('config main');
-	});
+var app = angular.module('main', ['cgi-list', 'cgi-route']);
 
-	app.run(function() {
-		console.log('run main');
-	});
+app.config(function() {
+	console.log('config main');
+});
 
-	app.directive('cgiHeader', function() {
-		return {
-			restrict: 'E',
-			templateUrl: './tmpl/cgi-header.html'
-		};
-	});
+app.run(function() {
+	console.log('run main');
+});
 
-	app.directive('cgiBody', function() {
-		return {
-			restrict: 'E',
-			templateUrl: './tmpl/cgi-body.html'
-		}
-	});
+app.directive('cgiHeader', function() {
+	return {
+		restrict: 'E',
+		templateUrl: './tmpl/cgi-header.html'
+	};
+});
 
-	app.directive('cgiFooter', function() {
-		return {
-			restrict: 'E',
-			templateUrl: './tmpl/cgi-footer.html'
-		}
-	});
-})();
+app.directive('cgiBody', function() {
+	return {
+		restrict: 'E',
+		templateUrl: './tmpl/cgi-body.html'
+	}
+});
+
+app.directive('cgiFooter', function() {
+	return {
+		restrict: 'E',
+		templateUrl: './tmpl/cgi-footer.html'
+	}
+});
