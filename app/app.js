@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('main', []);
+	var app = angular.module('main', ['cgi-list']);
 
 	app.directive('cgiHeader', function() {
 		return {
