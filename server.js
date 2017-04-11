@@ -10,6 +10,13 @@ app.use(serveIndex('.', {
 	icons: true
 }));
 
+app.use(['/app/produits', '/app/services', '/app/contact'], function(req, res, next) {
+	console.log('URL rewriting', req.url);
+	res.sendfile('./app/index.html', {
+		root: __dirname
+	});
+});
+
 app.use(function(req, res, next) {
 	console.log('404: Page not Found', req.url);
 	next();
