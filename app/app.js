@@ -1,6 +1,6 @@
 'use strict';
 
-require('./style.css');
+require('./style.scss');
 require('angular');
 require('angular-ui-router');
 require('./cgi-list/cgi-list.js');
