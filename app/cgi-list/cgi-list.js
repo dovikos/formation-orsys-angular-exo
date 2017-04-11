@@ -21,19 +21,48 @@
 			restrict: 'E',
 			controller: function CgiListCtrl($scope, $element, $attrs, $rootScope, $compile) {
 				'ngInject';
+				var ctrl = this;
 				console.log('CgiListCtrl', arguments);
 				var content = $element.html();
 				$element.html('');
 
-				for (var i = 0; i < 10; i++) {
-					var html = '<div>' + content + '</div>';
-                    var elt = angular.element(html);
-					$element.append(elt);
-                    var scope = $scope.$new(false);
-                    var name = $attrs.name;
-                    scope[name] = $rootScope.affaires[i];
-					$compile(elt)(scope);
+				ctrl.start = 0;
+
+				window.onwheel = function() {
+					console.log('Scrollllle', arguments);
+					ctrl.getMore();
+					$scope.$apply();
+				};
+
+				ctrl.$onInit = function() {
+					ctrl.lastCall = new Date();
+					ctrl.offset = 2;
+				};
+
+				ctrl.getMore = function() {
+					ctrl.now = new Date();
+					var d = new Date(ctrl.lastCall);
+					d.setSeconds(d.getSeconds + ctrl.offset);
+					if (ctrl.now < d) {
+						return;
+					}
+					ctrl.lastCall = ctrl.now;
+					var qty = $attrs.qty || 10;
+					qty = Number(qty);
+
+					for (var i = ctrl.start; i < ctrl.start + qty; i++) {
+						var html = '<div>' + content + '</div>';
+						var elt = angular.element(html);
+						$element.append(elt);
+						var scope = $scope.$new(false);
+						var name = $attrs.name;
+						scope[name] = $rootScope.affaires[i];
+						$compile(elt)(scope);
+					}
+					ctrl.start += qty;
 				}
+
+				ctrl.getMore();
 			}
 		}
 	});
