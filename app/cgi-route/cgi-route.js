@@ -3,6 +3,11 @@
 
 	var app = angular.module('cgi-route', ['ui.router']);
 
+	var homeUrl = require('./tmpl/home.html');
+	var produitsUrl = require('./tmpl/produits.html');
+	var servicesUrl = require('./tmpl/services.html');
+	var contactUrl = require('./tmpl/contact.html');
+
 	app.config(function($locationProvider, $stateProvider, $urlRouterProvider) {
 		'ngInject';
 
@@ -12,13 +17,13 @@
 		var homeState = {
 			name: 'home',
 			url: '/',
-			templateUrl: './cgi-route/tmpl/home.html'
+			templateUrl: homeUrl
 		}
 
 		var productState = {
 			name: 'produits',
 			url: '/produits',
-			templateUrl: './cgi-route/tmpl/produits.html',
+			templateUrl: produitsUrl,
 			controller: 'ProduitsCtrl',
 			controllerAs: '$ctrl'
 		}
@@ -26,13 +31,13 @@
 		var serviceState = {
 			name: 'services',
 			url: '/services',
-			templateUrl: './cgi-route/tmpl/services.html'
+			templateUrl: servicesUrl
 		}
 
 		var contactState = {
 			name: 'contact',
 			url: '/contact',
-			templateUrl: './cgi-route/tmpl/contact.html'
+			templateUrl: contactUrl
 		}
 
 		$stateProvider.state(homeState);
@@ -54,6 +59,7 @@
 					return $q.all([
 						$http.get('../ws/s2')
 						.then(function(response) {
+							console.log('response s2 response', response);
 							return $http.get('../ws/s6');
 						}),
 						$http.get('../ws/s3'),

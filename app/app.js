@@ -16,7 +16,23 @@ app.run(function() {
 	console.log('run main');
 });
 
-app.directive('cgiHeader', function() {
+var cgiHeaderUrl = require('./tmpl/cgi-header.html');
+var cgiBodyUrl = require('./tmpl/cgi-body.html');
+var cgiFooterUrl = require('./tmpl/cgi-footer.html');
+
+app.component('cgiHeader', {
+	templateUrl: cgiHeaderUrl,
+});
+
+app.component('cgiBody', {
+	templateUrl: cgiBodyUrl
+});
+
+app.component('cgiFooter', {
+	templateUrl: cgiFooterUrl
+});
+
+/*app.directive('cgiHeader', function() {
 	return {
 		restrict: 'E',
 		templateUrl: './tmpl/cgi-header.html'
@@ -35,4 +51,4 @@ app.directive('cgiFooter', function() {
 		restrict: 'E',
 		templateUrl: './tmpl/cgi-footer.html'
 	}
-});
+});*/

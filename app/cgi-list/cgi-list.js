@@ -57,7 +57,60 @@
 		};
 	});
 
-	app.directive('cgiList', function() {
+	app.component('cgiList', {
+
+		bindings: {
+			href: '@',
+			qty: '@',
+			name: '@',
+			kiki: '<?'
+		},
+
+		controller: function CgiListCtrl($scope, $element, $attrs,
+			$rootScope, $compile, infiniteListSrv, debounceSrv) {
+			'ngInject';
+			var ctrl = this;
+			console.log('CgiListCtrl', arguments);
+
+			var content;
+
+			window.onwheel = function() {
+				console.log('Scrollllle', arguments);
+				debounceSrv.run('cgiList', ctrl.offset, ctrl.getMore);
+				$scope.$apply();
+			};
+
+			ctrl.$onInit = function() {
+				content = $element.html();
+				$element.html('kiki={{$ctrl.kiki}}');
+				$compile($element.contents())($scope);
+
+				ctrl.offset = 5000;
+				ctrl.start = 0;
+				ctrl.getMore();
+			};
+
+			ctrl.getMore = function() {
+				var qty = ctrl.qty || 10;
+				qty = Number(qty);
+
+				var array = infiniteListSrv.getMore(ctrl.start, qty);
+				ctrl.start += qty;
+
+				for (var i = 0; i < qty; i++) {
+					var html = '<div>' + content + '</div>';
+					var elt = angular.element(html);
+					$element.append(elt);
+					var scope = $scope.$new(false);
+					var name = ctrl.name;
+					scope[name] = array[i];
+					$compile(elt)(scope);
+				}
+			}
+		}
+	});
+
+	/*app.directive('cgiList', function() {
 		return {
 			restrict: 'E',
 			controller: function CgiListCtrl($scope, $element, $attrs,
@@ -100,5 +153,5 @@
 				ctrl.getMore();
 			}
 		}
-	});
+	});*/
 })();

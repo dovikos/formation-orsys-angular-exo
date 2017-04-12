@@ -6,7 +6,7 @@ module.exports = router;
 console.log('webservices');
 
 var fn = (req, res, next) => {
-	console.log('calling s1', req.url);
+	console.log('calling web service', req.url);
 	fs.readFile('./ws' + req.url, 'utf8', function(err, data) {
 		if (err) {
 			return console.error(err);
